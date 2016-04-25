@@ -1,0 +1,29 @@
+{
+    "name": "nikita2206/symfony-request-converter",
+    "description": "Request converter converts request data to data-objects",
+    "type": "library",
+    "require": {
+        "symfony/dependency-injection": "^2.5",
+        "symfony/http-kernel": "^2.5",
+        "symfony/config": "^2.5",
+        "sensio/framework-extra-bundle": "^2.5 || ^3",
+        "doctrine/annotations": "^1.2",
+        "symfony/validator": "^2.5",
+        "doctrine/inflector": "^1.1",
+        "nikita2206/result": "^0.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.7"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "nikita2206",
+            "email": "inefedor@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"RequestConverter\\": "src"}
+    },
+    "minimum-stability": "dev"
+}
