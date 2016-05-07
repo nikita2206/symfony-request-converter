@@ -4,11 +4,11 @@ namespace RequestConverter;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Inflector\Inflector;
-use RequestConverter\Annotation\Optional;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use RequestConverter\Annotation\Request as RequestAnnotation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RequestParamConverter implements ParamConverterInterface
 {
@@ -18,42 +18,43 @@ class RequestParamConverter implements ParamConverterInterface
     private $reader;
 
     /**
+     * @var Converter
+     */
+    private $converter;
+
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    public function __construct(Reader $reader, Converter $converter, ValidatorInterface $validator)
+    {
+        $this->reader = $reader;
+        $this->converter = $converter;
+        $this->validator = $validator;
+    }
+
+    /**
      * @inheritdoc
      */
     public function apply(Request $request, ParamConverter $configuration)
     {
+        $isQuery = isset($configuration->getOptions()["query"]);
+
+        $source = $isQuery ? $request->query->all() : $request->request->all();
+        $nameMangling = $isQuery ? [Inflector::class, "tableize"] : function ($a) { return $a; };
+
         $class = new \ReflectionClass($configuration->getClass());
-        $source = isset($configuration->getOptions()["query"]) ? $request->query : $request->request;
-        $target = $class->newInstanceWithoutConstructor();
-        $setter = new Setter($target);
 
-        if ($configuration->getOptions()["query"]) {
-            $nameMangling = [Inflector::class, "camelize"];
-        } else {
-            $nameMangling = function ($a) { return $a; };
-        }
+        $result = $this->converter->convert($source, $class, $nameMangling);
 
-        $missing = [];
-        foreach ($class->getProperties() as $prop) {
-            $name = $prop->getName();
-            $mangled = $nameMangling($name);
-            $exists = $source->has($mangled);
+        if ( ! $result->getErrors()) {
+            $violations = $this->validator->validate($result->getValue());
 
-            if ( ! $exists && ! $this->reader->getPropertyAnnotation($prop, Optional::class)) {
-                $missing[] = $mangled;
-                continue;
-            }
-
-            if ($exists) {
-                $setter->set($name, $source->get($mangled));
+            if ( ! $violations->count()) {
+                $request->attributes->set($configuration->getName(), $result->getValue());
             }
         }
-
-        if ($missing) {
-            throw new MissingFieldsException("validation exception: some fields were missing", $missing);
-        }
-
-        $request->attributes->set($configuration->getName(), $target);
     }
 
     /**
