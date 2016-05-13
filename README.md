@@ -5,6 +5,8 @@ Request converter
 
 Convert API requests from plain PHP-arrays to request objects.
 
+[![Build Status](https://travis-ci.org/nikita2206/symfony-request-converter.svg?branch=master)](https://travis-ci.org/nikita2206/symfony-request-converter)
+
 ### Example
 
 In your controller action you can have: 
