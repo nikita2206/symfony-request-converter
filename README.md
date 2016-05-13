@@ -156,3 +156,9 @@ You can add your own data types to be used with `Type` annotation and parametriz
   create a new implementation of `RequestConverter\Coercion\TypeCoercer` interface and register it in the
   `RequestConverter\Coercer` service. Currently this service is not configurable so you'll have to use Symfony
   DI's feature of overriding service definitions and override the definition of the `request_converter.coercer` service.
+
+### Contributing
+
+All kinds of contributions are welcome: documentation, code or tests. The project mainly adheres to PSR-2 style guide.
+
+You can run tests with `./vendor/bin/phpunit` command from the root of the project.

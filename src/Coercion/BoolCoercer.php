@@ -21,15 +21,19 @@ class BoolCoercer implements TypeCoercer
         }
 
         if (\is_string($value)) {
+            $value = trim($value);
+
             if (\is_numeric($value)) {
                 $value = (bool)(int)$value;
-            } elseif (in_array($value, $this->false, true)) {
+            } elseif (\in_array($value, $this->false, true)) {
                 $value = false;
-            } elseif (in_array($value, $this->true, true)) {
+            } elseif (\in_array($value, $this->true, true)) {
                 $value = true;
             } else {
                 $value = (bool)$value;
             }
+        } else {
+            $value = (bool)$value;
         }
 
         return ConversionResult::value($value);

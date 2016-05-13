@@ -25,7 +25,7 @@ class ArrayCoercer implements TypeCoercer
             foreach ($value as $v) {
                 $result = $ctx->coerce($v, $type);
                 if ($result->getErrors()) {
-                    $errors = array_merge($errors, $result->errorsInIdx($idx));
+                    $errors = \array_merge($errors, $result->errorsInIdx($idx));
 
                     if ($result->getValue() === null) {
                         return ConversionResult::errors($errors);
@@ -37,6 +37,8 @@ class ArrayCoercer implements TypeCoercer
             }
 
             $value = $coerced;
+        } else {
+            $value = \array_values($value);
         }
 
         return ConversionResult::errors($errors, $value);

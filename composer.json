@@ -21,7 +21,7 @@
         }
     ],
     "autoload": {
-        "psr-4": {"RequestConverter\\": "src"}
+        "psr-4": {"RequestConverter\\": "src", "Tests\\": "tests"}
     },
     "minimum-stability": "dev"
 }
