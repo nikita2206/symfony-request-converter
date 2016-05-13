@@ -1,9 +1,9 @@
 <?php
 
-namespace RequestConverter;
+namespace RequestConverter\Symfony;
 
 use Doctrine\Common\Annotations\Reader;
-use Doctrine\Common\Inflector\Inflector;
+use RequestConverter\Converter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +42,7 @@ class RequestParamConverter implements ParamConverterInterface
         $isQuery = isset($configuration->getOptions()["query"]);
 
         $source = $isQuery ? $request->query->all() : $request->request->all();
-        $nameMangling = $isQuery ? [Inflector::class, "tableize"] : function ($a) { return $a; };
+        $nameMangling = $isQuery ? [self::class, "tableize"] : function ($a) { return $a; };
 
         $class = new \ReflectionClass($configuration->getClass());
 
@@ -73,5 +73,10 @@ class RequestParamConverter implements ParamConverterInterface
         }
 
         return $this->reader->getClassAnnotation($class, RequestAnnotation::class) !== null;
+    }
+
+    public function tableize($name)
+    {
+        return strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', $name));
     }
 }
