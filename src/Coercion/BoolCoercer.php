@@ -8,8 +8,8 @@ use RequestConverter\Validation\TypeError;
 
 class BoolCoercer implements TypeCoercer
 {
-    private $false = ["no", "false"];
-    private $true = ["yes", "true"];
+    private $false = ["no", "false", "N", "F"];
+    private $true = ["yes", "true", "Y", "T"];
 
     /**
      * @inheritdoc

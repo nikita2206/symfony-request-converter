@@ -4,6 +4,8 @@ namespace RequestConverter\Symfony;
 
 use Doctrine\Common\Annotations\Reader;
 use RequestConverter\Converter;
+use RequestConverter\Exception\RequestConversionException;
+use RequestConverter\Exception\RequestValidationException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,7 +55,11 @@ class RequestParamConverter implements ParamConverterInterface
 
             if ( ! $violations->count()) {
                 $request->attributes->set($configuration->getName(), $result->getValue());
+            } else {
+                throw new RequestValidationException($violations);
             }
+        } else {
+            throw new RequestConversionException($result->getErrors());
         }
     }
 
