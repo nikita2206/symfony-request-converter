@@ -99,8 +99,8 @@ class ExceptionListener
 All root-request classes will need to be marked with the `RequestConverter\Annotation\Request` annotation. And
   every member of said request class can be marked with the `RequestConverter\Annotation\Type` annotation in order to
   force it to be coerced to said type, below is the reference on all possible types. Also you can
-  mark them with the `RequestConverter\Annotation\Optional` annotation - otherwise if they are not present in the
-  request payload you'll be getting errors.
+  mark them with the `RequestConverter\Annotation\Optional` annotation to ignore the absence of the field in the
+  request payload.
 
 #### Type annotation
 
@@ -110,20 +110,19 @@ types and their coercion compatibility with others.
 
 ###### Int type
 
-Apart from `int` it can take a `string` that can be converted to `int` without losing information (otherwise you'll
-  get `UncoercibleValueError`).
+Apart from `int` it can take a numeric `string` that represents integer. Otherwise if it's a text string or if it
+  represents float, you'll get `UncoercibleValueError`.
 
 ###### Bool type
 
 Can also accept `int`, `float` and `string`.
-For `int` and `float` as well as for numeric strings will yield `false` for `0` and `true` for `1`.
+For `int` and `float` as well as for numeric strings will yield `false` for `0` and `true` for all other numbers.
 For non-numeric strings it will first try to compare them with the preset values of `[yes, true, Y, T]` and
-  `[no, false, N, F]`, if the match isn't found it will cast a string with `(bool)$value`.
+  `[no, false, N, F]`, if the match isn't found it should silently cast a string with `(bool)$value`.
 
 ###### Float type
 
-Can also accept `int` and `string`. Will try to coerce `string` to `float`, if the conversion is lossy the error will
-  be returned.
+Can also accept `int` and `string`. Will try to coerce `string` to `float` if the string represents float/integer value.
 
 ###### String type
 
