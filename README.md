@@ -1,4 +1,4 @@
-Request converter
+Request converter for Symfony2
 =================
 [![Build Status](https://travis-ci.org/nikita2206/symfony-request-converter.svg?branch=master)](https://travis-ci.org/nikita2206/symfony-request-converter)
 [![Coverage Status](https://coveralls.io/repos/github/nikita2206/symfony-request-converter/badge.svg?branch=master)](https://coveralls.io/github/nikita2206/symfony-request-converter?branch=master)
@@ -98,13 +98,15 @@ class ExceptionListener
 
 All root-request classes will need to be marked with the `RequestConverter\Annotation\Request` annotation. And
   every member of said request class can be marked with the `RequestConverter\Annotation\Type` annotation in order to
-  force it to be corced to said type, below is the reference on all possible types. Also you can
+  force it to be coerced to said type, below is the reference on all possible types. Also you can
   mark them with the `RequestConverter\Annotation\Optional` annotation - otherwise if they are not present in the
   request payload you'll be getting errors.
 
 #### Type annotation
 
 There are several types you can use, those are: int, bool, float, string, array, map and or a class name.
+If the incoming data is not of the right type, we will try to coerce it if possible, here's a list of possible
+types and their coercion compatibility with others.
 
 ###### Int type
 
