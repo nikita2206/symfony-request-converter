@@ -1,12 +1,10 @@
 Request converter
 =================
-
-*Sorry, there's no catchy name :P*
+[![Build Status](https://travis-ci.org/nikita2206/symfony-request-converter.svg?branch=master)](https://travis-ci.org/nikita2206/symfony-request-converter)
+[![Coverage Status](https://coveralls.io/repos/github/nikita2206/symfony-request-converter/badge.svg?branch=master)](https://coveralls.io/github/nikita2206/symfony-request-converter?branch=master)
 
 Convert API requests from plain PHP-arrays to request objects.
 
-[![Build Status](https://travis-ci.org/nikita2206/symfony-request-converter.svg?branch=master)](https://travis-ci.org/nikita2206/symfony-request-converter)
-[![Coverage Status](https://coveralls.io/repos/github/nikita2206/symfony-request-converter/badge.svg?branch=master)](https://coveralls.io/github/nikita2206/symfony-request-converter?branch=master)
 
 ### Example
 
