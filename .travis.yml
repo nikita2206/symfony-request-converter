@@ -1,8 +1,12 @@
 language: php
 install:
+  - composer require satooshi/php-coveralls:dev-master
   - composer install --prefer-dist
 
-script: ./vendor/bin/phpunit
+script: ./vendor/bin/phpunit --coverage-clover ./coverage.xml
+
+after_script:
+  - php ./vendor/bin/coveralls -v
 
 php:
   - "5.5"
