@@ -14,11 +14,11 @@ class IntCoercer implements TypeCoercer
      */
     public function coerce($value, $origType, array $typeParams, Context $ctx)
     {
-        if ( ! \is_int($value) && ! \is_string($value)) {
+        if ( ! \is_int($value) && ! \is_string($value) && ! \is_float($value)) {
             return ConversionResult::error(new TypeError(\gettype($value), 'int'));
         }
-        if (\is_string($value)) {
-            $value = \filter_var($value, FILTER_VALIDATE_INT);
+        if (\is_string($value) || \is_float($value)) {
+            $value = \filter_var((string)$value, FILTER_VALIDATE_INT);
 
             if ($value === false) {
                 return ConversionResult::error(new UncoercibleValueError('string', 'int'));

@@ -13,7 +13,6 @@ class IntCoercerTest extends TypeCoercerTestCase
             [false],
             [true],
             [new \stdClass()],
-            [1.1]
         ];
     }
 
@@ -43,5 +42,14 @@ class IntCoercerTest extends TypeCoercerTestCase
         $this->assertUncoercible($coercer->coerce("foo", "int", [], $this->ctx));
         $this->assertUncoercible($coercer->coerce("10.0", "int", [], $this->ctx));
         $this->assertUncoercible($coercer->coerce("10.45", "int", [], $this->ctx));
+    }
+
+    public function testFloat()
+    {
+        $coercer = new IntCoercer();
+
+        $this->assertConvertedValue(456, $coercer->coerce(456.0, "int", [], $this->ctx));
+        $this->assertConvertedValue(-99999, $coercer->coerce(-99999.0, "int", [], $this->ctx));
+        $this->assertUncoercible($coercer->coerce(1.1, "int", [], $this->ctx));
     }
 }
