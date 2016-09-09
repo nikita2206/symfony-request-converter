@@ -25,6 +25,8 @@ use RequestConverter\Annotation\Optional;
 use RequestConverter\Annotation\Request;
 
 /**
+ * We need to use this annotation in order to tell request converter that it should pick up action
+ *   parameter type-hinted with this class
  * @Request()
  **/
 class PostRequest
@@ -101,6 +103,21 @@ All root-request classes will need to be marked with the `RequestConverter\Annot
   force it to be coerced to said type, below is the reference on all possible types. Also you can
   mark them with the `RequestConverter\Annotation\Optional` annotation to ignore the absence of the field in the
   request payload.
+
+By default RequestConverter will use the body of the request, but you can switch it to use the query for some of the
+  action's parameters. In order to configure this you'll need to use
+  `Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter` annotation with `options={"query"=true}` argument,
+  like this:
+
+```
+/**
+ * @ParamConverter("filter", options={"query"=true})
+ */
+public function filterPostsAction(Filter $filter)
+{
+
+}
+```
 
 #### Type annotation
 
