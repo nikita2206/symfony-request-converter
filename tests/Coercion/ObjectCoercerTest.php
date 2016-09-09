@@ -24,7 +24,7 @@ class ObjectCoercerTest extends TypeCoercerTestCase
     public function testIncompatibleTypesReturnError($value)
     {
         $coercer = new ObjectCoercer();
-        $this->assertTypeError($coercer->coerce($value, [], $this->ctx));
+        $this->assertTypeError($coercer->coerce($value, "object", [], $this->ctx));
     }
 
     public function testPassthrough()
@@ -37,6 +37,6 @@ class ObjectCoercerTest extends TypeCoercerTestCase
             ->with($input, $this->equalTo(new \ReflectionClass("stdClass")))
             ->willReturn(ConversionResult::value($output));
 
-        $this->assertConvertedValue($output, $coercer->coerce($input, ["stdClass"], $this->ctx));
+        $this->assertConvertedValue($output, $coercer->coerce($input, "object<stdClass>", ["stdClass"], $this->ctx));
     }
 }

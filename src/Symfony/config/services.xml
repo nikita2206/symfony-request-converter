@@ -32,6 +32,7 @@
                 <argument key="object" type="service" id="request_converter.coercer.object" />
                 <argument key="string" type="service" id="request_converter.coercer.string" />
                 <argument key="bool" type="service" id="request_converter.coercer.bool" />
+                <argument key="date" type="service" id="request_converter.coercer.date" />
             </argument>
         </service>
 
@@ -42,5 +43,6 @@
         <service id="request_converter.coercer.object" class="RequestConverter\Coercion\ObjectCoercer" public="false" />
         <service id="request_converter.coercer.string" class="RequestConverter\Coercion\StringCoercer" public="false" />
         <service id="request_converter.coercer.bool" class="RequestConverter\Coercion\BoolCoercer" public="false" />
+        <service id="request_converter.coercer.date" class="RequestConverter\Coercion\DateCoercer" public="false" />
     </services>
 </container>

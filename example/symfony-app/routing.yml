@@ -1,0 +1,15 @@
+
+todo_add:
+  path: /todo
+  methods: [POST]
+  defaults: { _controller: todo_controller:add }
+
+todo_retrieve:
+  path: /todo/{id}
+  methods: [GET]
+  defaults: { _controller: todo_controller:retrieve }
+
+todo_all:
+  path: /todo
+  methods: [GET]
+  defaults: { _controller: todo_controller:all }

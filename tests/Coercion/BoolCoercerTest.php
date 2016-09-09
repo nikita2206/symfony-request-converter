@@ -23,7 +23,7 @@ class BoolCoercerTest extends TypeCoercerTestCase
     {
         $coercer = new BoolCoercer();
 
-        $result = $coercer->coerce($value, [], $this->ctx);
+        $result = $coercer->coerce($value, "bool", [], $this->ctx);
 
         $this->assertTypeError($result);
     }
@@ -32,10 +32,10 @@ class BoolCoercerTest extends TypeCoercerTestCase
     {
         $coercer = new BoolCoercer();
 
-        $result = $coercer->coerce(true, [], $this->ctx);
+        $result = $coercer->coerce(true, "bool", [], $this->ctx);
         $this->assertConvertedValue(true, $result);
 
-        $result = $coercer->coerce(false, [], $this->ctx);
+        $result = $coercer->coerce(false, "bool", [], $this->ctx);
         $this->assertConvertedValue(false, $result);
     }
 
@@ -43,39 +43,39 @@ class BoolCoercerTest extends TypeCoercerTestCase
     {
         $coercer = new BoolCoercer();
 
-        $this->assertConvertedValue(true, $coercer->coerce(1, [], $this->ctx));
-        $this->assertConvertedValue(true, $coercer->coerce(123, [], $this->ctx));
-        $this->assertConvertedValue(true, $coercer->coerce(-123, [], $this->ctx));
-        $this->assertConvertedValue(false, $coercer->coerce(0, [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce(1, "bool", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce(123, "bool", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce(-123, "bool", [], $this->ctx));
+        $this->assertConvertedValue(false, $coercer->coerce(0, "bool", [], $this->ctx));
     }
 
     public function testFloat()
     {
         $coercer = new BoolCoercer();
 
-        $this->assertConvertedValue(false, $coercer->coerce(0.0, [], $this->ctx));
-        $this->assertConvertedValue(true, $coercer->coerce(0.000000001, [], $this->ctx));
-        $this->assertConvertedValue(true, $coercer->coerce(421.45, [], $this->ctx));
-        $this->assertConvertedValue(true, $coercer->coerce(-123.05, [], $this->ctx));
+        $this->assertConvertedValue(false, $coercer->coerce(0.0, "bool", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce(0.000000001, "bool", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce(421.45, "bool", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce(-123.05, "bool", [], $this->ctx));
     }
 
     public function testString()
     {
         $coercer = new BoolCoercer();
 
-        $this->assertConvertedValue(true, $coercer->coerce("foo", [], $this->ctx));
-        $this->assertConvertedValue(false, $coercer->coerce("F", [], $this->ctx));
-        $this->assertConvertedValue(true, $coercer->coerce("T", [], $this->ctx));
-        $this->assertConvertedValue(false, $coercer->coerce("false", [], $this->ctx));
-        $this->assertConvertedValue(true, $coercer->coerce("true", [], $this->ctx));
-        $this->assertConvertedValue(true, $coercer->coerce("yes", [], $this->ctx));
-        $this->assertConvertedValue(false, $coercer->coerce("no", [], $this->ctx));
-        $this->assertConvertedValue(true, $coercer->coerce("Y", [], $this->ctx));
-        $this->assertConvertedValue(false, $coercer->coerce("N", [], $this->ctx));
-        $this->assertConvertedValue(true, $coercer->coerce("1", [], $this->ctx));
-        $this->assertConvertedValue(false, $coercer->coerce("0", [], $this->ctx));
-        $this->assertConvertedValue(false, $coercer->coerce("", [], $this->ctx));
-        $this->assertConvertedValue(false, $coercer->coerce(" ", [], $this->ctx));
-        $this->assertConvertedValue(true, $coercer->coerce("-1", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce("foo", "bool", [], $this->ctx));
+        $this->assertConvertedValue(false, $coercer->coerce("F", "bool", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce("T", "bool", [], $this->ctx));
+        $this->assertConvertedValue(false, $coercer->coerce("false", "bool", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce("true", "bool", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce("yes", "bool", [], $this->ctx));
+        $this->assertConvertedValue(false, $coercer->coerce("no", "bool", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce("Y", "bool", [], $this->ctx));
+        $this->assertConvertedValue(false, $coercer->coerce("N", "bool", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce("1", "bool", [], $this->ctx));
+        $this->assertConvertedValue(false, $coercer->coerce("0", "bool", [], $this->ctx));
+        $this->assertConvertedValue(false, $coercer->coerce("", "bool", [], $this->ctx));
+        $this->assertConvertedValue(false, $coercer->coerce(" ", "bool", [], $this->ctx));
+        $this->assertConvertedValue(true, $coercer->coerce("-1", "bool", [], $this->ctx));
     }
 }

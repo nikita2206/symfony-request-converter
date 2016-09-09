@@ -1,0 +1,17 @@
+{
+  "name": "symfony-request-converter/example",
+  "type": "project",
+  "require": {
+    "symfony/symfony": "~3",
+    "sensio/framework-extra-bundle": "~3"
+  },
+  "autoload": {
+    "psr-4": {"TodoExample\\": "src", "RequestConverter\\": "../src"}
+  },
+  "authors": [
+    {
+      "name": "Nikita Nefedov",
+      "email": "inefedor@gmail.com"
+    }
+  ]
+}

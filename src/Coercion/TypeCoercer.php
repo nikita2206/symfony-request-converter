@@ -9,10 +9,10 @@ interface TypeCoercer
 {
     /**
      * @param mixed $value
+     * @param string $origType
      * @param array $typeParams
      * @param Context $ctx
-     *
      * @return ConversionResult
      */
-    public function coerce($value, array $typeParams, Context $ctx);
+    public function coerce($value, $origType, array $typeParams, Context $ctx);
 }

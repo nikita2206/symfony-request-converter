@@ -23,25 +23,25 @@ class IntCoercerTest extends TypeCoercerTestCase
     public function testIncompatibleTypesReturnError($value)
     {
         $coercer = new IntCoercer();
-        $this->assertTypeError($coercer->coerce($value, [], $this->ctx));
+        $this->assertTypeError($coercer->coerce($value, "int", [], $this->ctx));
     }
 
     public function testInt()
     {
         $coercer = new IntCoercer();
-        $this->assertConvertedValue(10, $coercer->coerce(10, [], $this->ctx));
-        $this->assertConvertedValue(-10, $coercer->coerce(-10, [], $this->ctx));
+        $this->assertConvertedValue(10, $coercer->coerce(10, "int", [], $this->ctx));
+        $this->assertConvertedValue(-10, $coercer->coerce(-10, "int", [], $this->ctx));
     }
 
     public function testString()
     {
         $coercer = new IntCoercer();
 
-        $this->assertConvertedValue(-10, $coercer->coerce("-10", [], $this->ctx));
-        $this->assertConvertedValue(10, $coercer->coerce("10", [], $this->ctx));
-        $this->assertConvertedValue(0, $coercer->coerce("0", [], $this->ctx));
-        $this->assertUncoercible($coercer->coerce("foo", [], $this->ctx));
-        $this->assertUncoercible($coercer->coerce("10.0", [], $this->ctx));
-        $this->assertUncoercible($coercer->coerce("10.45", [], $this->ctx));
+        $this->assertConvertedValue(-10, $coercer->coerce("-10", "int", [], $this->ctx));
+        $this->assertConvertedValue(10, $coercer->coerce("10", "int", [], $this->ctx));
+        $this->assertConvertedValue(0, $coercer->coerce("0", "int", [], $this->ctx));
+        $this->assertUncoercible($coercer->coerce("foo", "int", [], $this->ctx));
+        $this->assertUncoercible($coercer->coerce("10.0", "int", [], $this->ctx));
+        $this->assertUncoercible($coercer->coerce("10.45", "int", [], $this->ctx));
     }
 }

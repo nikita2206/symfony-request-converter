@@ -26,14 +26,14 @@ class MapCoercerTest extends TypeCoercerTestCase
     public function testIncompatibleTypesReturnError($value)
     {
         $coercer = new MapCoercer();
-        $this->assertTypeError($coercer->coerce($value, [], $this->ctx));
+        $this->assertTypeError($coercer->coerce($value, "map", [], $this->ctx));
     }
 
     public function testNoParameters()
     {
         $coercer = new MapCoercer();
 
-        $this->assertConvertedValue(["a" => 1, "b" => 9], $coercer->coerce(["a" => 1, "b" => 9], [], $this->ctx));
+        $this->assertConvertedValue(["a" => 1, "b" => 9], $coercer->coerce(["a" => 1, "b" => 9], "map", [], $this->ctx));
     }
 
     public function testTypedValueOnly()
@@ -50,7 +50,7 @@ class MapCoercerTest extends TypeCoercerTestCase
                 ConversionResult::value(6),
                 ConversionResult::value(9));
         $this->assertConvertedValue(["a" => 2, "b" => 6, "c" => 9],
-            $coercer->coerce(["a" => 2, "b" => 6, "c" => 9], ["int"], $this->ctx));
+            $coercer->coerce(["a" => 2, "b" => 6, "c" => 9], "map<int>", ["int"], $this->ctx));
     }
 
     public function testTypedKeyValue()
@@ -69,7 +69,7 @@ class MapCoercerTest extends TypeCoercerTestCase
                 ConversionResult::value("b"),
                 ConversionResult::value(1));
 
-        $this->assertConvertedValue(["a", "b"], $coercer->coerce(["a", "b"], ["int", "string"], $this->ctx));
+        $this->assertConvertedValue(["a", "b"], $coercer->coerce(["a", "b"], "map<int, string>", ["int", "string"], $this->ctx));
     }
 
     public function testTypedValueNonTerminalErrors()
@@ -88,7 +88,7 @@ class MapCoercerTest extends TypeCoercerTestCase
                 ConversionResult::value(9),
                 ConversionResult::error(new MissingFieldError(), 15));
 
-        $result = $coercer->coerce(["a" => 2, "b" => 6, "c" => 9, "d" => 15], ["int"], $this->ctx);
+        $result = $coercer->coerce(["a" => 2, "b" => 6, "c" => 9, "d" => 15], "map<int>", ["int"], $this->ctx);
         $this->assertSame(["a" => 2, "b" => 6, "c" => 9, "d" => 15], $result->getValue());
         $this->assertCount(2, $result->getErrors());
         $this->assertInstanceOf(MissingFieldError::class, $result->getErrors()[0]);
@@ -109,7 +109,7 @@ class MapCoercerTest extends TypeCoercerTestCase
                 ConversionResult::value(2),
                 ConversionResult::error(new TypeError("object", "int")));
 
-        $result = $coercer->coerce(["a" => 2, "b" => 6, "c" => 9, "d" => 15], ["int"], $this->ctx);
+        $result = $coercer->coerce(["a" => 2, "b" => 6, "c" => 9, "d" => 15], "map<int>", ["int"], $this->ctx);
         $this->assertNull($result->getValue());
         $this->assertCount(1, $result->getErrors());
         $this->assertInstanceOf(TypeError::class, $result->getErrors()[0]);
@@ -136,7 +136,7 @@ class MapCoercerTest extends TypeCoercerTestCase
                 ConversionResult::value(9),
                 ConversionResult::error(new MissingFieldError(), "c"));
 
-        $result = $coercer->coerce(["a" => 2, "b" => 6, "c" => 9], ["string", "int"], $this->ctx);
+        $result = $coercer->coerce(["a" => 2, "b" => 6, "c" => 9], "map<string, int>", ["string", "int"], $this->ctx);
         $this->assertSame(["a" => 2, "b" => 6, "c" => 9], $result->getValue());
         $this->assertCount(2, $result->getErrors());
         $this->assertInstanceOf(MissingFieldError::class, $result->getErrors()[0]);
@@ -157,7 +157,7 @@ class MapCoercerTest extends TypeCoercerTestCase
                 ConversionResult::value(2),
                 ConversionResult::error(new TypeError("object", "int")));
 
-        $result = $coercer->coerce(["a" => 2, "b" => 6, "c" => 9, "d" => 15], ["string", "int"], $this->ctx);
+        $result = $coercer->coerce(["a" => 2, "b" => 6, "c" => 9, "d" => 15], "map<string, int>", ["string", "int"], $this->ctx);
         $this->assertNull($result->getValue());
         $this->assertCount(1, $result->getErrors());
         $this->assertInstanceOf(TypeError::class, $result->getErrors()[0]);

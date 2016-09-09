@@ -28,7 +28,7 @@ class ArrayCoercerTest extends TypeCoercerTestCase
     public function testNotArray($value)
     {
         $coercer = new ArrayCoercer();
-        $result = $coercer->coerce($value, [], $this->ctx);
+        $result = $coercer->coerce($value, "array", [], $this->ctx);
 
         $this->assertTypeError($result);
     }
@@ -38,7 +38,7 @@ class ArrayCoercerTest extends TypeCoercerTestCase
         $value = [1, 2, 6 => 3];
 
         $coercer = new ArrayCoercer();
-        $result = $coercer->coerce($value, [], $this->ctx);
+        $result = $coercer->coerce($value, "array", [], $this->ctx);
 
         $this->assertConvertedValue([1, 2, 3], $result);
     }
@@ -59,7 +59,7 @@ class ArrayCoercerTest extends TypeCoercerTestCase
                 ConversionResult::value(2),
                 ConversionResult::value(3));
 
-        $result = $coercer->coerce($value, ["int"], $this->ctx);
+        $result = $coercer->coerce($value, "array<int>", ["int"], $this->ctx);
 
         $this->assertConvertedValue($value, $result);
     }
@@ -78,7 +78,7 @@ class ArrayCoercerTest extends TypeCoercerTestCase
                 ConversionResult::error(new MissingFieldError(), 2),
                 ConversionResult::error(new UncoercibleValueError("string", "array"), 3));
 
-        $result = $coercer->coerce([1, 2, 3], ["int"], $this->ctx);
+        $result = $coercer->coerce([1, 2, 3], "array", ["int"], $this->ctx);
 
         $this->assertSame([1, 2, 3], $result->getValue());
         $this->assertCount(2, $result->getErrors());
@@ -100,7 +100,7 @@ class ArrayCoercerTest extends TypeCoercerTestCase
                 ConversionResult::value(1),
                 ConversionResult::error(new MissingFieldError()));
 
-        $result = $coercer->coerce([1, 2, 3], ["int"], $this->ctx);
+        $result = $coercer->coerce([1, 2, 3], "array<int>", ["int"], $this->ctx);
 
         $this->assertNull($result->getValue());
         $this->assertCount(1, $result->getErrors());

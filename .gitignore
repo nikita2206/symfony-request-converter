@@ -1,3 +1,8 @@
 /vendor
 /composer.lock
+/example/vendor
+/example/composer.lock
+/example/symfony-app/cache
+/example/symfony-app/logs
+/example/symfony-app/storage
 

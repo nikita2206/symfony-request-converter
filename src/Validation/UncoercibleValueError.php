@@ -17,9 +17,8 @@ class UncoercibleValueError extends Error
     /**
      * @param string $givenType
      * @param string $expectedType
-     * @param string $field
      */
-    public function __construct($givenType, $expectedType, $field = null)
+    public function __construct($givenType, $expectedType)
     {
         parent::__construct();
 

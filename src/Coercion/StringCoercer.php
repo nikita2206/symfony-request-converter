@@ -11,7 +11,7 @@ class StringCoercer implements TypeCoercer
     /**
      * @inheritdoc
      */
-    public function coerce($value, array $typeParams, Context $ctx)
+    public function coerce($value, $origType, array $typeParams, Context $ctx)
     {
         if ( ! \is_string($value) && ! \is_int($value) && ! \is_float($value)) {
             return ConversionResult::error(new TypeError(\gettype($value), 'string'));

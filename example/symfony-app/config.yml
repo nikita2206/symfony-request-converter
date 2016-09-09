@@ -1,0 +1,24 @@
+
+framework:
+  secret: 'secret'
+  validation: { enable_annotations: true }
+  router:
+    resource: '%kernel.root_dir%/routing.yml'
+    strict_requirements: ~
+
+services:
+  todo_controller:
+    class: TodoExample\TodoController
+    arguments: ['@dumb_storage', '@router']
+
+  dumb_storage:
+    class: TodoExample\Storage\DumbFileStorage
+    arguments: ['%kernel.root_dir%/storage']
+
+  invalid_request_renderer:
+    class: TodoExample\InvalidRequestRenderer
+  invalid_request_exception_listener:
+    class: TodoExample\ExceptionListener
+    arguments: ['@invalid_request_renderer']
+    tags:
+      - { name: 'kernel.event_listener', event: 'kernel.exception' }

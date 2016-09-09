@@ -36,7 +36,7 @@ class Coercer
 
         list($coerceType, $parameters) = $this->parseType($type);
 
-        return $this->getCoercer($coerceType, $type)->coerce($value, $parameters, $ctx);
+        return $this->getCoercer($coerceType, $type)->coerce($value, $type, $parameters, $ctx);
     }
 
     /**
@@ -47,7 +47,7 @@ class Coercer
      */
     protected function parseType($type)
     {
-        if ( ! \preg_match('!^(?:(?<basic_type>array|int|bool|float|string|Map)|(?<class_type>[^<]+))(?:\<(?<t_params>.+?)\>)?$!', $type, $matches)) {
+        if ( ! \preg_match('!^(?:(?<basic_type>array|int|bool|float|string|Map|Date)|(?<class_type>[^<]+))(?:\<(?<t_params>.+?)\>)?$!', $type, $matches)) {
             throw InvalidTypeException::from($type);
         }
 

@@ -63,9 +63,12 @@ class Converter
 
                 $value = $result->getValue();
                 $errors = \array_merge($errors, $result->errorsInField($name));
-            }
 
-            $setter->set($prop->getName(), $value);
+                $setter->set($prop->getName(), $value);
+
+            } elseif ($value === null) {
+                $setter->set($prop->getName(), null);
+            }
         }
 
         return ConversionResult::errors($errors, $object);

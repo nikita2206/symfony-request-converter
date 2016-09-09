@@ -12,7 +12,7 @@ class MapCoercer implements TypeCoercer
     /**
      * @inheritdoc
      */
-    public function coerce($value, array $typeParams, Context $ctx)
+    public function coerce($value, $origType, array $typeParams, Context $ctx)
     {
         if ( ! \is_array($value)) {
             return ConversionResult::error(new TypeError(\gettype($value), 'object'));
