@@ -78,6 +78,6 @@ class Task implements \JsonSerializable
      */
     function jsonSerialize()
     {
-        return ["due" => $this->due->format("d/m/Y H:i")] + get_object_vars($this);
+        return ["due" => $this->due ? $this->due->format("d/m/Y H:i") : null] + get_object_vars($this);
     }
 }

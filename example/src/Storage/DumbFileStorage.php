@@ -48,7 +48,7 @@ class DumbFileStorage implements Storage
     public function retrieve($id)
     {
         if ( ! is_file("{$this->dir}/{$id}")) {
-            throw new \RuntimeException("Object does not exist");
+            throw new \RuntimeException("Object {$id} does not exist");
         }
 
         $file = file_get_contents("{$this->dir}/{$id}");
